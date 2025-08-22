@@ -243,24 +243,30 @@ function renderCurrentMaterials(materials) {
     return;
   }
   
-  filteredMaterials.forEach(material => {
-    const div = document.createElement('div');
-    div.className = 'current-material-item';
-    div.innerHTML = `
-      <img src="${material.image || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23ddd" width="100" height="100" rx="10"/><text y="55" x="50" text-anchor="middle" fill="%23999" font-size="30">?</text></svg>'}" alt="${material.name}" class="material-image" />
-      <div class="material-details">
-        <div class="material-name">${material.name}</div>
-        <div class="material-inputs">
-          <input type="number" value="${material.obtained}" onchange="updateMaterialProgress('${material.id}', 'obtained', this.value)" min="0" />
-          /
-          <input type="number" value="${material.required}" onchange="updateMaterialProgress('${material.id}', 'required', this.value)" min="1" />
-        </div>
+filteredMaterials.forEach(material => {
+  const div = document.createElement('div');
+  div.className = 'current-material-item';
+  
+  // Default image for materials
+  const defaultMaterialImage = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23ddd" width="100" height="100" rx="10"/><text y="55" x="50" text-anchor="middle" fill="%23999" font-size="30">?</text></svg>';
+  
+  // Fix the image source
+  const materialImage = material.image && material.image !== 'null' && material.image !== null && material.image.trim() !== '' ? material.image : defaultMaterialImage;
+  
+  div.innerHTML = `
+    <img src="${materialImage}" alt="${material.name}" class="material-image" onerror="this.src='${defaultMaterialImage}'" />
+    <div class="material-details">
+      <div class="material-name">${material.name}</div>
+      <div class="material-inputs">
+        <input type="number" value="${material.obtained}" onchange="updateMaterialProgress('${material.id}', 'obtained', this.value)" min="0" />
+        /
+        <input type="number" value="${material.required}" onchange="updateMaterialProgress('${material.id}', 'required', this.value)" min="1" />
       </div>
-      <button class="btn-delete" onclick="removeMaterial('${material.id}')">×</button>
-    `;
-    container.appendChild(div);
-  });
-}
+    </div>
+    <button class="btn-delete" onclick="removeMaterial('${material.id}')">×</button>
+  `;
+  container.appendChild(div);
+});}
 
 function updateMaterialProgress(materialId, field, value) {
   if (!editingItemId) return;
@@ -936,54 +942,45 @@ function filterItems(items, filter) {
   return activeItems;
 }
 
-// Render Functions
-function renderMaterialItems() {
-  const inProgressContainer = document.getElementById('inProgressContainer');
-  const completedContainer = document.getElementById('completedContainer');
-  const inProgressCount = document.getElementById('inProgressCount');
-  const completedCount = document.getElementById('completedCount');
+function renderCurrentMaterials(materials) {
+  const container = document.getElementById('currentMaterialsList');
+  if (!container) return;
   
-  if (!inProgressContainer || !completedContainer) return;
+  // Filter materials by current category
+  const filteredMaterials = materials.filter(material => 
+    material.category === currentMaterialCategory
+  );
   
-  // Clear containers
-  inProgressContainer.innerHTML = '';
-  completedContainer.innerHTML = '';
+  container.innerHTML = '';
   
-  // Filter items based on current filter
-  let filteredItems;
-  
-  if (currentFilter === 'completed') {
-    filteredItems = materialItems.filter(item => item.completed);
-    
-    // Hide in-progress section, show completed section
-    document.getElementById('inProgressSection').style.display = 'none';
-    document.getElementById('completedSection').style.display = 'block';
-    
-    renderItemsInContainer(filteredItems, completedContainer);
-    completedCount.textContent = `${filteredItems.length} items`;
-    
+  if (filteredMaterials.length === 0) {
+    container.innerHTML = `<p style="text-align: center; color: #999; padding: 2rem;">No materials in this category yet. Click "Add Custom Material" to get started.</p>`;
     return;
   }
   
-  // For all other filters, show only in-progress items
-  document.getElementById('inProgressSection').style.display = 'block';
-  document.getElementById('completedSection').style.display = 'none';
+  // Default image for materials
+  const defaultMaterialImage = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23ddd" width="100" height="100" rx="10"/><text y="55" x="50" text-anchor="middle" fill="%23999" font-size="30">?</text></svg>';
   
-  filteredItems = filterItems(materialItems, currentFilter);
-  
-  renderItemsInContainer(filteredItems, inProgressContainer);
-  inProgressCount.textContent = `${filteredItems.length} items`;
-}
-
-function renderItemsInContainer(items, container) {
-  if (items.length === 0) {
-    container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">No items to display</p>';
-    return;
-  }
-  
-  items.forEach(item => {
-    const itemElement = createItemElement(item);
-    container.appendChild(itemElement);
+  filteredMaterials.forEach(material => {
+    const div = document.createElement('div');
+    div.className = 'current-material-item';
+    
+    // Fix the image source
+    const materialImage = material.image && material.image !== 'null' && material.image !== null && material.image.trim() !== '' ? material.image : defaultMaterialImage;
+    
+    div.innerHTML = `
+      <img src="${materialImage}" alt="${material.name}" class="material-image" onerror="this.src='${defaultMaterialImage}'" />
+      <div class="material-details">
+        <div class="material-name">${material.name}</div>
+        <div class="material-inputs">
+          <input type="number" value="${material.obtained}" onchange="updateMaterialProgress('${material.id}', 'obtained', this.value)" min="0" />
+          /
+          <input type="number" value="${material.required}" onchange="updateMaterialProgress('${material.id}', 'required', this.value)" min="1" />
+        </div>
+      </div>
+      <button class="btn-delete" onclick="removeMaterial('${material.id}')">×</button>
+    `;
+    container.appendChild(div);
   });
 }
 
