@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
   loadMaterialItems();
-  cleanupCorruptedData(); // Add this line
   setupEventListeners();
   populateLevelSelectors();
   renderMaterialItems();
@@ -759,29 +758,3 @@ function deleteItem(itemId) {
     renderMaterialItems();
   }
 }
-// Clean up corrupted data
-function cleanupCorruptedData() {
-  let needsSave = false;
-  
-  materialItems.forEach(item => {
-    if (item.materials) {
-      item.materials.forEach(material => {
-        if (material.image === 'null' || material.image === null || material.image === '') {
-          material.image = null;
-          needsSave = true;
-        }
-      });
-    }
-  });
-  
-  if (needsSave) {
-    saveMaterialItems();
-    console.log('Cleaned up corrupted material images');
-  }
-}
-
-// Call cleanup when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  initializeApp();
-  cleanupCorruptedData(); // Add this line
-});
