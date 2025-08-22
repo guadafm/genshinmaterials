@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Genshin Impact Materials</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle fill='%23b38478' cx='50' cy='50' r='45'/><text y='60' x='50' text-anchor='middle' fill='white' font-size='40'>✦</text></svg>" type="image/svg+xml">
+    <link rel="icon" href="icono de pagina.webp" type="image/webp">
     <meta name="description" content="Track your character and weapon ascension materials progress" />
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
@@ -138,6 +138,15 @@
         <div class="modal" id="editMaterialsModal">
             <div class="modal-content materials-modal">
                 <h2>Edit Materials</h2>
+                <div class="material-categories">
+                    <button class="category-btn active" data-category="weekly-boss">Weekly Boss Drops</button>
+                    <button class="category-btn" data-category="normal-boss">Normal Boss Drops</button>
+                    <button class="category-btn" data-category="elite">Elite Drops</button>
+                    <button class="category-btn" data-category="ascension-gems">Ascension Gems</button>
+                    <button class="category-btn" data-category="general">General Drops</button>
+                    <button class="category-btn" data-category="local-specialities">Local Specialities</button>
+                    <button class="category-btn" data-category="talent-books">Talent Books</button>
+                </div>
                 <div class="materials-editor-container">
                     <div class="current-materials">
                         <h3>Current Materials</h3>
@@ -145,27 +154,11 @@
                             <!-- Current materials will be loaded here -->
                         </div>
                         <button type="button" class="btn-primary" id="addMaterialButton">Add Custom Material</button>
-                        <button type="button" class="btn-secondary" id="addFromCatalogButton">Add from Catalog</button>
                     </div>
                 </div>
                 <div class="modal-buttons">
                     <button type="button" class="btn-primary" id="saveMaterialsButton">Save Changes</button>
                     <button type="button" class="btn-cancel" id="cancelMaterialsButton">Cancel</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Material Catalog Modal -->
-        <div class="modal" id="materialCatalogModal">
-            <div class="modal-content catalog-modal">
-                <h2>Material Catalog</h2>
-                <div class="catalog-container">
-                    <div class="catalog-grid" id="catalogGrid">
-                        <!-- Material catalog items will be loaded here -->
-                    </div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn-cancel" id="closeCatalogButton">Close</button>
                 </div>
             </div>
         </div>

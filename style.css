@@ -889,3 +889,89 @@ body {
   margin-bottom: 1.5rem;
   line-height: 1.5;
 }
+
+/* Agregar estos estilos al final del archivo CSS existente */
+
+.material-categories {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: var(--muted);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.category-btn {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: var(--foreground);
+}
+
+.category-btn.active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.category-btn:hover:not(.active) {
+  background-color: var(--secondary);
+}
+
+.current-material-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.current-material-item .material-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.current-material-item .material-details {
+  flex: 1;
+}
+
+.current-material-item .material-name {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.current-material-item .material-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-material-item .material-inputs input {
+  width: 4rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.progress-text {
+  color: #666;
+  font-size: 0.875rem;
+  font-style: italic;
+}
